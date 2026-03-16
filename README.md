@@ -1,16 +1,48 @@
-# React + Vite
+# GymFlow ⚡
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-performance fitness and nutrition tracking dashboard focused on elite UI design and dynamic workout persistence. Built on the PERN stack (MySQL instead of PostgreSQL).
 
-Currently, two official plugins are available:
+## Features
+- **Secure Authentication**: Custom user accounts with salted password hashing (`bcryptjs`) and secure stateless session management (`jsonwebtoken`).
+- **Dynamic Nutrition Tracking**: Search real-time food entries via the USDA FoodData Central API. Calculate exact macro portion sizes and permanently save meal logs to your specific user database.
+- **Neon-Themed Interactive Dashboard**: Fully responsive dark-mode UI with custom `radial-gradient` JS mouse-tracking elements, staggered letter CSS animations, and floating UI components.
+- **Database Persistence**: MySQL backend architecture that tracks `users` and `user_foods` to ensure calories and macronutrient progress rings are always securely saved.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
+**Frontend**: React, Vite, React Router, Lucide Icons, Axios.
+**Backend**: Node.js, Express, MySQL2.
+**Security**: bcryptjs, jsonwebtoken, cors.
 
-## React Compiler
+## Installation
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1. Database Setup
+Make sure you have a local MySQL server running. The backend is configured to automatically create the `gymflow` database and tables upon startup.
 
-## Expanding the ESLint configuration
+### 2. Backend Environment
+Navigate to the `/backend` directory and add a `.env` file with your config:
+```env
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_NAME=gymflow
+PORT=5000
+JWT_SECRET=supersecretgymflowkey_123
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 3. Start the Servers
+Open two separate terminal windows.
+
+**Terminal 1 (Backend API):**
+```bash
+cd backend
+npm install
+node server.js
+```
+
+**Terminal 2 (Frontend Client):**
+```bash
+npm install
+npm run dev
+```
+
+Navigate to `http://localhost:5173` to view the app!
