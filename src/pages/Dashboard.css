@@ -1,0 +1,309 @@
+/* Immersive full-screen visual design matching the SLUSH reference */
+
+.dashboard-container {
+  width: 100vw;
+  height: 100vh;
+  background-color: #0a0c0a; /* Dark gymflow background */
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Interactive Neon Net Glow */
+.neon-net-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  /* Grid pattern simulating a "net" */
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(57, 255, 20, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(57, 255, 20, 0.15) 1px, transparent 1px);
+  /* The mask uses CSS variables updated heavily by JS to follow mouse */
+  mask-image: radial-gradient(circle 350px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle 350px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 0%, transparent 100%);
+  z-index: 1; /* Keep it strictly in the background */
+  pointer-events: none;
+}
+
+/* Top Navigation Pills */
+.dash-nav {
+  position: absolute;
+  top: 24px;
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 10;
+}
+
+.nav-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.align-right-nav {
+  gap: 16px;
+}
+
+.dash-profile-widget {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 40px;
+  background-color: #121813;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s;
+}
+
+.dash-profile-widget:hover {
+  border-color: var(--accent-green);
+  background-color: #1a221c;
+}
+
+.dash-profile-widget .profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.dash-profile-widget .profile-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.dash-profile-widget .profile-status {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent-green);
+}
+
+.dash-profile-widget .profile-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--accent-green);
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.pill-btn {
+  background: #121813;
+  color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 40px;
+  padding: 10px 24px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.pill-btn:hover {
+  background: #1a221c;
+  color: var(--accent-green);
+  border-color: var(--accent-green);
+}
+
+.pill-btn.active {
+  background: var(--accent-green);
+  color: #000;
+  border-color: var(--accent-green);
+}
+
+.icon-btn {
+  background: #121813;
+  color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.primary-btn {
+  background: var(--accent-green);
+  color: #000;
+  border: 2px solid var(--accent-green);
+  border-radius: 40px;
+  padding: 12px 32px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.primary-btn:hover {
+  background: #000;
+  color: var(--accent-green);
+}
+
+/* Main Hero Typography & Layout */
+.hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 5;
+  margin-top: 40px;
+}
+
+.hero-title {
+  font-size: 16vw; /* Massive responsive typography */
+  font-weight: 900;
+  color: #fff;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  font-style: italic; /* Adding Gymflow italics */
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  text-shadow: 2px 2px 0px rgba(57, 255, 20, 0.3); /* Green drop shadow */
+  display: flex;
+  justify-content: center;
+}
+
+.animated-letter {
+  display: inline-block;
+  opacity: 0;
+  animation: wavePop 6s ease-in-out infinite;
+}
+
+@keyframes wavePop {
+  0% { transform: translateY(100px); opacity: 0; }
+  10% { transform: translateY(0); opacity: 1; }
+  85% { transform: translateY(0); opacity: 1; }
+  95% { transform: translateY(-100px); opacity: 0; }
+  100% { transform: translateY(-100px); opacity: 0; }
+}
+
+.hero-subtitle {
+  font-size: 3vw;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-top: 24px;
+  margin-bottom: 48px;
+  letter-spacing: -0.02em;
+}
+
+/* Call to actions at bottom */
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.hero-btn {
+  border-radius: 40px;
+  padding: 16px 32px;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-btn:hover {
+  transform: translateY(-4px);
+}
+
+.hero-btn.light {
+  background: #121813;
+  color: #fff;
+  border: 1px solid var(--border-color);
+}
+
+.hero-btn.light:hover {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.hero-btn.with-icon {
+  background: #121813;
+  color: #fff;
+  border: 1px solid var(--border-color);
+  padding: 12px 32px 12px 12px;
+}
+
+.hero-btn.with-icon:hover {
+  border-color: var(--accent-green);
+}
+
+.icon-circle {
+  width: 32px;
+  height: 32px;
+  background-color: var(--bg-surface);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border: 1px solid var(--border-color);
+}
+
+/* Floating Elements */
+.floating-element {
+  position: absolute;
+  font-size: 8vw;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3));
+  pointer-events: none;
+  animation: float 6s ease-in-out infinite;
+}
+
+.el-rocket {
+  top: 10%;
+  left: -5%;
+  transform: rotate(-15deg);
+}
+
+.el-smile {
+  top: 15%;
+  right: 25%;
+  transform: rotate(15deg) scale(1.1);
+  animation-delay: -2s;
+}
+
+.el-wallet {
+  bottom: 30%;
+  right: -5%;
+  transform: rotate(-20deg);
+  animation-delay: -4s;
+}
+
+.el-coin {
+  bottom: 20%;
+  left: 10%;
+  transform: rotate(10deg);
+  animation-delay: -1s;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(auto); }
+  50% { transform: translateY(-20px) rotate(auto); }
+  100% { transform: translateY(0px) rotate(auto); }
+}

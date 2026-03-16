@@ -1,0 +1,206 @@
+/* Target reference aesthetic split layout with gym background */
+.auth-page {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.auth-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  /* Beautiful dark gym atmospheric image */
+  background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2670&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  z-index: -2;
+}
+
+/* Gradient overlay to make text pop on the left, but keep atmosphere */
+.auth-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to right, rgba(14, 18, 14, 0.95) 0%, rgba(14, 18, 14, 0.8) 40%, rgba(14, 18, 14, 0.4) 100%);
+  z-index: -1;
+}
+
+/* Container limits width and splits it */
+.auth-container {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Brand styling mimicking provided Linkit image but Gymflow branded */
+.auth-branding {
+  flex: 1;
+  max-width: 500px;
+  color: #fff;
+  padding-right: 40px;
+}
+
+.auth-logo {
+  font-size: 56px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+  background: linear-gradient(to right, #fff 40%, var(--accent-green) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.auth-tagline {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+
+/* White Card Wrapper */
+.auth-card-container {
+  flex: 0 0 450px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.auth-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 48px;
+  width: 100%;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.auth-title {
+  color: #111827;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.auth-subtitle {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+.auth-error {
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 20px;
+  border: 1px solid #f87171;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #111827;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: #fff;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #10b981; /* A neat green matching the mock */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background-color 0.2s;
+}
+
+.auth-btn:hover:not(:disabled) {
+  background-color: #059669;
+}
+
+.auth-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.auth-toggle {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.auth-toggle span {
+  color: #10b981;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-toggle span:hover {
+  text-decoration: underline;
+}
+
+.demo-credentials {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.demo-title {
+  font-weight: 700;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.demo-highlight {
+  color: #374151;
+  font-family: monospace;
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Responsiveness */
+@media (max-width: 900px) {
+  .auth-container {
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px;
+  }
+  
+  .auth-branding {
+    text-align: center;
+    padding-right: 0;
+  }
+}

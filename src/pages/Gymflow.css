@@ -1,0 +1,548 @@
+.gymflow-page {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr;
+  gap: 40px;
+}
+
+.gymflow-main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Section Containers */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 900;
+  font-style: italic;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.view-all {
+  color: var(--accent-green);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.2s;
+}
+
+.view-all:hover {
+  opacity: 0.8;
+}
+
+/* Muscle Grid */
+.muscle-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 16px;
+  padding-bottom: 12px; /* Room for scrollbar */
+}
+
+/* Custom scrollbar for Chrome, Safari and Opera */
+.muscle-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.muscle-grid::-webkit-scrollbar-track {
+  background: var(--bg-surface-card); 
+  border-radius: 4px;
+}
+
+.muscle-grid::-webkit-scrollbar-thumb {
+  background: var(--border-color); 
+  border-radius: 4px;
+}
+
+.muscle-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-green); 
+}
+
+/* Scrollbar for Firefox */
+.muscle-grid {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--bg-surface-card);
+}
+
+.muscle-card {
+  flex: 0 0 calc((100% - 48px) / 4); /* Exactly 4 items visible factoring in the 3*16px gaps *per 100% view* */
+  height: 220px;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+
+.muscle-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-green);
+}
+
+.muscle-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to top, rgba(10, 12, 10, 0.95) 0%, rgba(10, 12, 10, 0.2) 60%, transparent 100%);
+  z-index: 1;
+}
+
+/* Placeholders for images using CSS gradients */
+.chest-bg { background: linear-gradient(135deg, #1f2a24, #121814); }
+.back-bg { background: linear-gradient(135deg, #2a221f, #181312); }
+.legs-bg { background: linear-gradient(135deg, #222a1f, #131812); }
+.shoulders-bg { background: linear-gradient(135deg, #1f222a, #121318); }
+
+.muscle-info {
+  position: relative;
+  z-index: 2;
+}
+
+.muscle-name {
+  font-size: 18px;
+  font-weight: 900;
+  font-style: italic;
+  color: #fff;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.exercise-count {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent-green);
+  background-color: rgba(57, 255, 20, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Active Row */
+.active-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.live-tracker {
+  padding: 24px;
+  border: 1px solid var(--accent-green);
+  box-shadow: 0 0 30px rgba(57, 255, 20, 0.05), inset 0 0 20px rgba(57, 255, 20, 0.02);
+  display: flex;
+  flex-direction: column;
+}
+
+.tracker-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.tracker-title {
+  display: flex;
+  gap: 12px;
+}
+
+.expand-icon {
+  color: var(--accent-green);
+  margin-top: 4px;
+}
+
+.tracker-title h3 {
+  font-size: 16px;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--accent-green);
+  line-height: 1.2;
+}
+
+.recording-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--accent-green);
+  box-shadow: 0 0 10px var(--accent-green);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(57, 255, 20, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(57, 255, 20, 0); }
+}
+
+.tracker-stats {
+  display: flex;
+  justify-content: space-between;
+  border-left: 2px solid var(--accent-green);
+  padding-left: 16px;
+  margin-bottom: 24px;
+}
+
+.tracker-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tracker-stat.align-right {
+  align-items: flex-end;
+}
+
+.tracker-stat .label, .tracker-next .label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.tracker-stat .value {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.tracker-stat .value.highlight {
+  color: var(--accent-green);
+  font-style: italic;
+}
+
+.tracker-next {
+  background-color: var(--bg-surface);
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.tracker-next .value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.finish-btn {
+  background-color: var(--accent-green);
+  color: #000;
+  font-weight: 900;
+  font-size: 14px;
+  font-style: italic;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: auto;
+  transition: opacity 0.2s;
+}
+
+.finish-btn:hover {
+  opacity: 0.9;
+}
+
+.music-player {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.player-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.music-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  background-color: var(--bg-surface);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.track-info {
+  flex: 1;
+}
+
+.track-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.track-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.playback-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.control-btn:hover { background-color: var(--bg-surface-hover); }
+
+.play-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--accent-green);
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.play-btn:hover { transform: scale(1.05); }
+
+.equalizer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 60px;
+  padding-top: 20px;
+  margin-top: auto;
+}
+
+.eq-bar {
+  width: 6px;
+  background: linear-gradient(to top, rgba(57,255,20,0.3), rgba(57,255,20,1));
+  border-radius: 3px;
+  transition: height 0.1s ease;
+}
+
+.equalizer.animated .eq-bar {
+  animation: eqPulse 0.5s infinite alternate ease-in-out;
+}
+
+.equalizer.animated .eq-bar:nth-child(even) {
+  animation-duration: 0.4s;
+}
+
+.equalizer.animated .eq-bar:nth-child(3n) {
+  animation-duration: 0.6s;
+}
+
+@keyframes eqPulse {
+  0% { transform: scaleY(0.5); }
+  100% { transform: scaleY(1.2); }
+}
+
+/* Sidebar Columns */
+.gymflow-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.sidebar-title {
+  font-size: 16px;
+  font-weight: 900;
+  font-style: italic;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+.sidebar-title.margin-bottom {
+  margin-bottom: 20px;
+}
+
+.sidebar-subtitle {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.cal-header {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cal-day.missed { background-color: #121813; color: #2e3b32; }
+.cal-day.checked { background-color: var(--accent-green); color: #000; }
+.cal-day.num { background-color: #1a221c; color: var(--text-muted); }
+.cal-day.today { background-color: var(--bg-surface); color: #fff; }
+.cal-day.border-active { border: 2px solid var(--accent-green); }
+.cal-day.empty { background-color: #121813; opacity: 0.3; }
+
+.completion-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+}
+
+.highlight-text {
+  color: var(--accent-green);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.progress-bg {
+  height: 6px;
+  background-color: var(--bg-surface-card);
+  border-radius: 3px;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--accent-green);
+  border-radius: 3px;
+}
+
+/* Stats */
+.stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+}
+
+.stat-icon {
+  color: var(--accent-green);
+  opacity: 0.9;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-info .stat-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.stat-info .stat-value {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.stat-info .unit {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.stat-info .italic {
+  font-style: italic;
+}
+
+/* Upsell Card */
+.upsell-card {
+  background: linear-gradient(135deg, #2e7a17 0%, #153b1b 100%);
+  padding: 24px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.upsell-title {
+  font-size: 18px;
+  font-weight: 900;
+  font-style: italic;
+  color: #fff;
+}
+
+.upsell-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+}
+
+.upsell-btn {
+  background-color: #0b110b;
+  color: var(--accent-green);
+  font-weight: 800;
+  font-size: 13px;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 12px;
+  transition: background-color 0.2s;
+}
+
+.upsell-btn:hover {
+  background-color: #000;
+}
