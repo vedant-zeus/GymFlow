@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard';
 import Nutrition from './pages/Nutrition';
 import PRVault from './pages/PRVault';
 import Gymflow from './pages/Gymflow';
+import Settings from './pages/Settings';
 import './App.css';
 
 import Auth from './pages/Auth';
@@ -19,6 +20,7 @@ function App() {
           <Route path="/nutrition" element={<Nutrition />} />
           <Route path="/pr-vault" element={<PRVault />} />
           <Route path="/gymflow" element={<Gymflow />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </Layout>
     </Router>
