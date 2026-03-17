@@ -1,0 +1,202 @@
+/* ============================================================
+   LOADING SCREEN — GymFlow
+   ============================================================ */
+
+/* ── Root container ── */
+.ls-root {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+.ls-fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Background video (cropped to fill) ── */
+.ls-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* crops the video to fill screen */
+  object-position: bottom ;
+  pointer-events: none;
+}
+
+/* ── Dark gradient overlay on top of video ── */
+.ls-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(10, 10, 10, 0.55) 50%,
+    rgba(0, 0, 0, 0.80) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Content layer (sits above video + overlay) ── */
+.ls-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+/* ── Brand name ── */
+.ls-brand {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1;
+  animation: ls-brand-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.ls-brand-gym {
+  color: #ffffff;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.35);
+}
+
+.ls-brand-flow {
+  color: #39FF14;
+  text-shadow: 0 0 18px rgba(57, 255, 20, 0.85),
+               0 0 40px rgba(57, 255, 20, 0.45);
+}
+
+@keyframes ls-brand-in {
+  from { opacity: 0; transform: translateY(-24px) scale(0.9); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);   }
+}
+
+/* ── Figure container ── */
+.ls-figure-wrap {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Glowing pulsing ring behind the figure */
+.ls-glow-ring {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 2px solid rgba(57, 255, 20, 0.55);
+  box-shadow: 0 0 24px rgba(57, 255, 20, 0.40),
+              0 0 60px rgba(57, 255, 20, 0.18),
+              inset 0 0 24px rgba(57, 255, 20, 0.10);
+  animation: ls-ring-pulse 2s ease-in-out infinite;
+}
+
+@keyframes ls-ring-pulse {
+  0%, 100% { transform: scale(1);    opacity: 0.7; }
+  50%       { transform: scale(1.08); opacity: 1;   }
+}
+
+/* Figure image */
+.ls-img {
+  width: 210px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 4px 18px rgba(57, 255, 20, 0.35));
+}
+
+/* Bench-press animation */
+.ls-press {
+  animation: ls-bench-press 1.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  transform-origin: center ;
+}
+
+@keyframes ls-bench-press {
+  0%   { transform: translateY(0px);   }
+  40%  { transform: translateY(-26px); }
+  55%  { transform: translateY(-28px); }
+  100% { transform: translateY(0px);   }
+}
+
+/* ── Tagline ── */
+.ls-tagline {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(0.7rem, 2.2vw, 0.9rem);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.70);
+  animation: ls-fade-up 1s 0.5s ease both;
+  margin: 0;
+  text-shadow: 0 0 12px rgba(57, 255, 20, 0.25);
+}
+
+@keyframes ls-fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Loading dots ── */
+.ls-dots {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.ls-dot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #39FF14;
+  box-shadow: 0 0 8px rgba(57, 255, 20, 0.8);
+  animation: ls-pop 0.9s ease-in-out infinite;
+}
+
+@keyframes ls-pop {
+  0%, 100% { transform: scale(0.5); opacity: 0.3; }
+  50%       { transform: scale(1.4); opacity: 1;   }
+}
+
+/* ── Progress bar ── */
+.ls-progress-track {
+  width: 200px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.ls-progress-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #39FF14, #00e5ff);
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+  animation: ls-progress 4.2s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+@keyframes ls-progress {
+  0%   { width: 0%; }
+  30%  { width: 45%; }
+  70%  { width: 75%; }
+  100% { width: 100%; }
+}
+.ls-brand {
+    font-style: italic;
+}

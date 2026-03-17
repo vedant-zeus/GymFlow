@@ -91,7 +91,7 @@ const Dashboard = () => {
             </span>
           ))}
         </h1>
-        <h2 className="hero-subtitle">Your fitness. Unstuck.</h2>
+        <h2 className="hero-subtitle">Track. Lift. Dominate.</h2>
 
         <div className="hero-ctas">
           <button className="hero-btn light" onClick={() => navigate('/gymflow')}>LAUNCH GYM APP</button>

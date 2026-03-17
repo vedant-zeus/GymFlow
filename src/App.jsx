@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
@@ -5,11 +6,26 @@ import Nutrition from './pages/Nutrition';
 import PRVault from './pages/PRVault';
 import Gymflow from './pages/Gymflow';
 import Settings from './pages/Settings';
+import LoadingScreen from './components/LoadingScreen';
 import './App.css';
 
 import Auth from './pages/Auth';
 
+// Only show the intro once per browser session
+const hasSeenIntro = sessionStorage.getItem('gf_intro_done') === 'true';
+
 function App() {
+  const [loading, setLoading] = useState(!hasSeenIntro);
+
+  const handleLoadingDone = () => {
+    sessionStorage.setItem('gf_intro_done', 'true');
+    setLoading(false);
+  };
+
+  if (loading) {
+    return <LoadingScreen onDone={handleLoadingDone} />;
+  }
+
   return (
     <Router>
       <Layout>
@@ -28,3 +44,4 @@ function App() {
 }
 
 export default App;
+
