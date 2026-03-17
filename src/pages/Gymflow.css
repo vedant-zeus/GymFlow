@@ -106,10 +106,12 @@
 }
 
 /* Placeholders for images using CSS gradients */
-.chest-bg { background: linear-gradient(135deg, #1f2a24, #121814); }
-.back-bg { background: linear-gradient(135deg, #2a221f, #181312); }
-.legs-bg { background: linear-gradient(135deg, #222a1f, #131812); }
-.shoulders-bg { background: linear-gradient(135deg, #1f222a, #121318); }
+.chest-bg { background-image: url('/chest.jpg'); background-size: cover; background-position: center top; }
+.back-bg { background-image: url('/back.jpg'); background-size: cover; background-position: center top; }
+.legs-bg { background-image: url('/legs.jpg'); background-size: cover; background-position: center top; }
+.shoulders-bg { background-image: url('/shoulder.jpg'); background-size: cover; background-position: center top; }
+.biceps-bg { background-image: url('/bicep.jpg'); background-size: cover; background-position: center top; }
+.triceps-bg { background-image: url('/tricep.jpg'); background-size: cover; background-position: center top; }
 
 .muscle-info {
   position: relative;
