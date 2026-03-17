@@ -45,4 +45,4 @@ npm install
 npm run dev
 ```
 
-Navigate to `http://localhost:5173` to view the app!
+Navigate to `https://gym-flow-ivory.vercel.app/` to view the app!

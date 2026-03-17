@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Auth.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -25,7 +27,7 @@ const Auth = () => {
     setLoading(true);
     try {
       const endpoint = isLogin ? '/auth/login' : '/auth/signup';
-      const res = await axios.post(`http://localhost:5000${endpoint}`, formData);
+      const res = await axios.post(`${API_URL}${endpoint}`, formData);
       
       // Save token and user info
       localStorage.setItem('token', res.data.token);

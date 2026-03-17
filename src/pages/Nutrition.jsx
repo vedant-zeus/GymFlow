@@ -3,6 +3,8 @@ import { Search, Calendar, Sunrise, Sun, Moon, Utensils, Trash2, Plus } from 'lu
 import axios from 'axios';
 import './Nutrition.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Nutrition = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -24,7 +26,7 @@ const Nutrition = () => {
         const token = localStorage.getItem('token');
         if (!token) return; // Exit if not logged in
         
-        const res = await axios.get('http://localhost:5000/user-foods', {
+        const res = await axios.get(`${API_URL}/user-foods`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setLoggedFoods(res.data);
@@ -43,7 +45,7 @@ const Nutrition = () => {
       if (searchQuery.trim().length > 2) {
         setIsSearching(true);
         try {
-          const res = await axios.get(`http://localhost:5000/food/search?query=${searchQuery}`);
+          const res = await axios.get(`${API_URL}/food/search?query=${searchQuery}`);
           setSearchResults(res.data);
         } catch (err) {
           console.error('Error searching food:', err);
@@ -81,7 +83,7 @@ const Nutrition = () => {
     setIsAddingFood(true);
     try {
       // 1. Get accurate macros from USD API via our backend proxy
-      const nutritionRes = await axios.post(`http://localhost:5000/food/nutrition`, {
+      const nutritionRes = await axios.post(`${API_URL}/food/nutrition`, {
         fdcId: selectedFood.fdcId,
         quantity: parseFloat(quantity)
       });
@@ -103,7 +105,7 @@ const Nutrition = () => {
       const token = localStorage.getItem('token');
       if (token) {
         console.log("Attempting to POST to /user-foods with payload:", newFoodEntry);
-        const dbRes = await axios.post('http://localhost:5000/user-foods', newFoodEntry, {
+        const dbRes = await axios.post(`${API_URL}/user-foods`, newFoodEntry, {
           headers: { Authorization: `Bearer ${token}` }
         });
         
@@ -132,7 +134,7 @@ const Nutrition = () => {
     try {
       const token = localStorage.getItem('token');
       if (token) {
-        await axios.delete(`http://localhost:5000/user-foods/${id}`, {
+        await axios.delete(`${API_URL}/user-foods/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         // Remove locally only if the backend deleted it
