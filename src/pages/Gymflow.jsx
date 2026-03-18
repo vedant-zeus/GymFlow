@@ -1,6 +1,21 @@
-import React, { useState, useRef } from 'react';
-import { ArrowRight, Maximize2, CheckCircle2, Music, SkipBack, Play, Pause, Check, Flame, Clock, Activity, ArrowUpRight, X, Plus } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { ArrowRight, Maximize2, CheckCircle2, Music, SkipBack, Play, Pause, Check, Flame, Clock, Activity, X, Plus } from 'lucide-react';
 import './Gymflow.css';
+
+// ─── Live date helpers ─────────────────────────────────────────────────────
+const today = new Date();
+const TODAY_DAY   = today.getDate();
+const THIS_MONTH  = today.getMonth();      // 0-indexed
+const THIS_YEAR   = today.getFullYear();
+const MONTH_NAMES = ['January','February','March','April','May','June',
+                     'July','August','September','October','November','December'];
+const DAYS_IN_MONTH = new Date(THIS_YEAR, THIS_MONTH + 1, 0).getDate();
+// What weekday does the 1st fall on? (0=Sun … 6=Sat). We want Mon-first grid.
+const firstDayOfMonth = new Date(THIS_YEAR, THIS_MONTH, 1).getDay(); // 0=Sun
+const MONDAY_OFFSET = (firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1); // cells before day 1
+
+// localStorage key scoped to current month so data resets each new month
+const STORAGE_KEY = `gymflow_workouts_${THIS_YEAR}_${THIS_MONTH}`;
 
 const initialMuscleGroups = {
   'CHEST': ['Bench Press', 'Incline DB Press', 'Cable Crossovers', 'Dips'],
@@ -19,13 +34,27 @@ const Gymflow = () => {
   
   // --- Daily Tracking State ---
   const [selectedForToday, setSelectedForToday] = useState([]);
-  // Let's pretend today is the 12th as mocked in the UI
-  const [dailyWorkouts, setDailyWorkouts] = useState({
-    // Mocking past dates
-    26: ['Pushups'], 27: [], 28: [], 29: [], 30: [],
-    1: ['Squats', 'Leg Press'], 2: ['Bench Press'], 3: ['Pull-ups'], 
-    5: ['Deadlifts'], 6: ['Bicep Curls'], 8: ['Lunges'], 9: ['Overhead Press'], 10: ['Dips'], 11: ['Lat Pulldowns']
+
+  // Load persisted workout log from localStorage (scoped to current month)
+  const [dailyWorkouts, setDailyWorkouts] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved) : {};
+    } catch { return {}; }
   });
+
+  // Persist to localStorage whenever dailyWorkouts changes
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(dailyWorkouts));
+  }, [dailyWorkouts]);
+
+  // Derive today's exercise count from the log
+  const todaysExercises = dailyWorkouts[TODAY_DAY] || [];
+  const caloriesToday   = todaysExercises.length * 45;  // ~45 kcal per exercise
+  const minutesToday    = todaysExercises.length * 8;   // ~8 min per exercise
+  const intensityToday  = todaysExercises.length === 0 ? '—'
+                        : todaysExercises.length < 3   ? 'LOW'
+                        : todaysExercises.length < 6   ? 'MODERATE' : 'HIGH';
 
   // --- Music Player State ---
   const [isPlaying, setIsPlaying] = useState(false);
@@ -62,12 +91,7 @@ const Gymflow = () => {
 
   const finishWorkout = () => {
     if (selectedForToday.length > 0) {
-      setDailyWorkouts({
-        ...dailyWorkouts,
-        12: selectedForToday // Save selection for today (12)
-      });
-      // Optionally clear for a new session, but we can leave it to keep the tracker active
-      // setSelectedForToday([]);
+      setDailyWorkouts(prev => ({ ...prev, [TODAY_DAY]: selectedForToday }));
       alert('Workout Completed! Calendar Updated.');
     } else {
       alert('Select exercises first by clicking on a muscle group!');
@@ -109,25 +133,47 @@ const Gymflow = () => {
     setIsPlaying(!isPlaying);
   };
 
-  const renderCalendarDay = (day, isToday = false) => {
-    const isCompleted = dailyWorkouts[day] && dailyWorkouts[day].length > 0;
-    const isMissed = dailyWorkouts[day] && dailyWorkouts[day].length === 0;
-    
-    // Tooltip text using native JS title prop
-    const titleText = isCompleted ? `Completed: ${dailyWorkouts[day].join(', ')}` : isMissed ? 'Missed Workout' : '';
+  // ── Live calendar renderer ──────────────────────────────────────────────
+  const renderCalendarGrid = () => {
+    const cells = [];
 
-    let className = "cal-day ";
-    if (isToday) className += "today border-active ";
-    if (isCompleted) className += "checked ";
-    if (isMissed) className += "missed ";
-    if (!isCompleted && !isMissed && !isToday) className += "empty ";
-    if (!isCompleted && !isMissed && day < 12 && day > 0) className = "cal-day num";
+    // Leading empty cells (days before the 1st of the month)
+    for (let i = 0; i < MONDAY_OFFSET; i++) {
+      cells.push(<div className="cal-day empty" key={`empty-pre-${i}`} />);
+    }
 
-    return (
-      <div className={className} title={titleText} key={day}>
-        {isCompleted ? <Check size={14} strokeWidth={4} /> : (day < 12 || isToday ? day : '')}
-      </div>
-    );
+    // All days of the month
+    for (let d = 1; d <= DAYS_IN_MONTH; d++) {
+      const isToday     = d === TODAY_DAY;
+      const isPast      = d < TODAY_DAY;
+      const isCompleted = dailyWorkouts[d] && dailyWorkouts[d].length > 0;
+      const isMissed    = isPast && !isCompleted; // past day with no workout = missed
+
+      const titleText = isCompleted
+        ? `Completed: ${dailyWorkouts[d].join(', ')}`
+        : isMissed ? 'Missed' : '';
+
+      let cls = 'cal-day ';
+      if (isToday)     cls += 'today border-active ';
+      if (isCompleted) cls += 'checked ';
+      else if (isMissed)  cls += 'missed ';
+      else if (!isToday)  cls += 'empty ';
+
+      cells.push(
+        <div className={cls} title={titleText} key={d}>
+          {isCompleted ? <Check size={14} strokeWidth={4} /> : d}
+        </div>
+      );
+    }
+
+    // Trailing empty cells to fill last row to 7
+    const totalCells = MONDAY_OFFSET + DAYS_IN_MONTH;
+    const trailing   = (7 - (totalCells % 7)) % 7;
+    for (let i = 0; i < trailing; i++) {
+      cells.push(<div className="cal-day empty" key={`empty-post-${i}`} />);
+    }
+
+    return cells;
   };
 
   return (
@@ -301,82 +347,55 @@ const Gymflow = () => {
       {/* Right Column (Sidebar metrics) */}
       <div className="gymflow-sidebar">
         
-        {/* Consistency */}
+        {/* Consistency – Live Calendar */}
         <div className="sidebar-section">
           <div className="sidebar-header">
             <h3 className="sidebar-title">CONSISTENCY</h3>
-            <span className="sidebar-subtitle">OCTOBER 2023</span>
+            <span className="sidebar-subtitle">{MONTH_NAMES[THIS_MONTH].toUpperCase()} {THIS_YEAR}</span>
           </div>
 
           <div className="calendar-grid">
-            <div className="cal-header">M</div>
-            <div className="cal-header">T</div>
-            <div className="cal-header">W</div>
-            <div className="cal-header">T</div>
-            <div className="cal-header">F</div>
-            <div className="cal-header">S</div>
-            <div className="cal-header">S</div>
-
-            {/* Row 1 */}
-            {renderCalendarDay(26)}
-            {renderCalendarDay(27)}
-            {renderCalendarDay(28)}
-            {renderCalendarDay(29)}
-            {renderCalendarDay(30)}
-            {renderCalendarDay(1)}
-            {renderCalendarDay(2)}
-
-            {/* Row 2 */}
-            {renderCalendarDay(3)}
-            {renderCalendarDay(4)}
-            {renderCalendarDay(5)}
-            {renderCalendarDay(6)}
-            {renderCalendarDay(7)}
-            {renderCalendarDay(8)}
-            {renderCalendarDay(9)}
-
-            {/* Row 3 */}
-            {renderCalendarDay(10)}
-            {renderCalendarDay(11)}
-            {renderCalendarDay(12, true)} {/* Today */}
-            <div className="cal-day empty"></div>
-            <div className="cal-day empty"></div>
-            <div className="cal-day empty"></div>
-            <div className="cal-day empty"></div>
-            
-            {/* Row 4 */}
-            <div className="cal-day empty"></div>
-            <div className="cal-day empty"></div>
-            <div className="cal-day empty"></div>
-            <div className="cal-day empty"></div>
-            <div className="cal-day empty"></div>
-            <div className="cal-day empty"></div>
-            <div className="cal-day empty"></div>
+            {['M','T','W','T','F','S','S'].map((d, i) => (
+              <div className="cal-header" key={i}>{d}</div>
+            ))}
+            {renderCalendarGrid()}
           </div>
 
           <div className="completion-bar-container">
             <div className="completion-labels">
               <span>Monthly Completion</span>
-              <span className="highlight-text">{(Object.keys(dailyWorkouts).filter(k => dailyWorkouts[k].length > 0).length / 31 * 100).toFixed(0)}%</span>
+              <span className="highlight-text">
+                {Math.round(
+                  Object.keys(dailyWorkouts).filter(k => Number(k) <= TODAY_DAY && dailyWorkouts[k].length > 0).length
+                  / TODAY_DAY * 100
+                )}%
+              </span>
             </div>
             <div className="progress-bg">
-              <div className="progress-fill" style={{ width: `${(Object.keys(dailyWorkouts).filter(k => dailyWorkouts[k].length > 0).length / 31 * 100).toFixed(0)}%` }}></div>
+              <div className="progress-fill" style={{
+                width: `${Math.round(
+                  Object.keys(dailyWorkouts).filter(k => Number(k) <= TODAY_DAY && dailyWorkouts[k].length > 0).length
+                  / TODAY_DAY * 100
+                )}%`
+              }} />
             </div>
           </div>
         </div>
 
-        {/* Today's Stats */}
+        {/* Today's Stats – live based on logged exercises */}
         <div className="sidebar-section">
           <h3 className="sidebar-title margin-bottom">TODAY'S STATS</h3>
           <div className="stats-list">
-            
+
             <div className="card stat-row">
               <div className="stat-icon flame">
                 <Flame size={20} fill="currentColor" />
               </div>
               <div className="stat-info">
                 <span className="stat-label">CALORIES BURNED</span>
-                <span className="stat-value">642 <span className="unit">kcal</span></span>
+                <span className="stat-value">
+                  {caloriesToday} <span className="unit">kcal</span>
+                </span>
               </div>
             </div>
 
@@ -386,7 +405,9 @@ const Gymflow = () => {
               </div>
               <div className="stat-info">
                 <span className="stat-label">TIME SPENT</span>
-                <span className="stat-value">48 <span className="unit">min</span></span>
+                <span className="stat-value">
+                  {minutesToday} <span className="unit">min</span>
+                </span>
               </div>
             </div>
 
@@ -396,7 +417,7 @@ const Gymflow = () => {
               </div>
               <div className="stat-info">
                 <span className="stat-label">INTENSITY LEVEL</span>
-                <span className="stat-value italic">HIGH</span>
+                <span className="stat-value italic">{intensityToday}</span>
               </div>
             </div>
 
