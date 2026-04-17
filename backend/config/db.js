@@ -78,6 +78,21 @@ const createTables = async () => {
       )
     `);
     console.log('Database initialized: user_foods table is ready.');
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS personal_records (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        exercise_id VARCHAR(50) NOT NULL,
+        exercise_name VARCHAR(255) NOT NULL,
+        weight FLOAT NOT NULL,
+        unit VARCHAR(10) DEFAULT 'KG',
+        notes TEXT,
+        logged_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      )
+    `);
+    console.log('Database initialized: personal_records table is ready.');
   } catch (err) {
     console.error('Error creating tables:', err);
   }

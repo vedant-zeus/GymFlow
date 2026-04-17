@@ -4,6 +4,7 @@ const cors = require('cors');
 const foodRoutes = require('./routes/foodRoutes');
 const authRoutes = require('./routes/authRoutes');
 const userFoodRoutes = require('./routes/userFoodRoutes');
+const prRoutes = require('./routes/prRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/food', foodRoutes);
 app.use('/auth', authRoutes);
 app.use('/user-foods', userFoodRoutes);
+app.use('/api/pr', prRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Backend is running' });
