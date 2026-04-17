@@ -75,7 +75,7 @@ const Settings = () => {
     // Call API
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/change-password`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/change-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ currentPassword, newPassword }),
@@ -227,7 +227,7 @@ const Settings = () => {
           </div>
 
           <div className="field-group">
-            <label className="field-label">TARGET WEIGHT (kg)</label>
+            <label className="field-label">TARGET WEIGHT ({weightUnit.toUpperCase()})</label>
             <input
               type="number"
               className="settings-input"

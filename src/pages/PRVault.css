@@ -249,6 +249,19 @@
   padding: 16px;
   border-radius: 8px;
   border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.hof-item.locked {
+  opacity: 0.6;
+  filter: grayscale(1);
+  border-style: dashed;
+}
+
+.hof-item.unlocked {
+  background-color: rgba(57, 255, 20, 0.05);
+  border-color: var(--accent-green);
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.1);
 }
 
 .hof-icon {
@@ -260,6 +273,13 @@
   align-items: center;
   justify-content: center;
   color: var(--accent-green);
+  transition: all 0.3s ease;
+}
+
+.hof-item.unlocked .hof-icon {
+  background-color: var(--accent-green);
+  color: #000;
+  box-shadow: 0 0 10px var(--accent-green);
 }
 
 .hof-title {
