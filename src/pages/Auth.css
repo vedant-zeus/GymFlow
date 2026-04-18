@@ -190,7 +190,11 @@
   border-radius: 4px;
 }
 
-/* Responsiveness */
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — Auth
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tablet (≤900px) ── */
 @media (max-width: 900px) {
   .auth-container {
     flex-direction: column;
@@ -198,9 +202,65 @@
     gap: 40px;
     padding: 20px;
   }
-  
+
   .auth-branding {
     text-align: center;
     padding-right: 0;
+  }
+
+  .auth-card-container {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 450px;
+    justify-content: center;
+  }
+}
+
+/* ── Mobile (≤600px) ── */
+@media (max-width: 600px) {
+  .auth-container {
+    padding: 16px;
+    gap: 24px;
+  }
+
+  .auth-branding {
+    max-width: 100%;
+  }
+
+  .auth-logo {
+    font-size: 36px;
+    margin-bottom: 16px;
+  }
+
+  .auth-tagline {
+    font-size: 14px;
+  }
+
+  .auth-card-container {
+    max-width: 100%;
+  }
+
+  .auth-card {
+    padding: 28px 20px;
+    border-radius: 16px;
+  }
+
+  .auth-title {
+    font-size: 22px;
+  }
+
+  .auth-subtitle {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .auth-input {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .auth-btn {
+    padding: 12px;
+    font-size: 15px;
   }
 }

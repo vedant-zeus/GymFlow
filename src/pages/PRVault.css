@@ -465,3 +465,154 @@
   color: rgba(255, 255, 255, 0.02);
   z-index: 0;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — PR Vault
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tablet (≤1024px) ── */
+@media (max-width: 1024px) {
+  .vault-header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .vault-stats {
+    width: 100%;
+  }
+
+  .stat-box {
+    flex: 1;
+    align-items: center;
+  }
+
+  .major-lifts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .middle-section {
+    grid-template-columns: 1fr;
+  }
+
+  .log-section {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .bar-chart {
+    height: 160px;
+  }
+
+  .bar-column {
+    width: 30px;
+  }
+}
+
+/* ── Mobile (≤600px) ── */
+@media (max-width: 600px) {
+  .pr-vault-page {
+    gap: 20px;
+  }
+
+  .vault-title {
+    font-size: 24px;
+  }
+
+  .vault-subtitle {
+    font-size: 12px;
+  }
+
+  .vault-stats {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .stat-box {
+    padding: 10px 16px;
+  }
+
+  .stat-value {
+    font-size: 15px;
+  }
+
+  .major-lifts-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .lift-card {
+    padding: 18px;
+  }
+
+  .lift-name {
+    font-size: 17px;
+    margin-bottom: 8px;
+  }
+
+  .lift-weight {
+    font-size: 34px;
+  }
+
+  .lift-unit {
+    font-size: 15px;
+  }
+
+  .update-btn {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .section-title {
+    font-size: 15px;
+  }
+
+  .chart-container,
+  .hof-container {
+    padding: 16px;
+  }
+
+  .bar-chart {
+    height: 140px;
+  }
+
+  .bar-column {
+    width: 22px;
+  }
+
+  .hof-item {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .hof-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hof-title {
+    font-size: 13px;
+  }
+
+  .hof-desc {
+    font-size: 11px;
+  }
+
+  .log-section {
+    padding: 16px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lock-btn {
+    font-size: 13px;
+    padding: 14px;
+  }
+
+  .standards-container {
+    padding: 16px;
+  }
+}

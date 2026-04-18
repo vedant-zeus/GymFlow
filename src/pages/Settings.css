@@ -487,6 +487,114 @@
   font-weight: 600;
 }
 
-@media (max-width: 700px) {
-  .settings-grid { grid-template-columns: 1fr; }
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — Settings
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tablet (≤768px) ── */
+@media (max-width: 768px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-page {
+    max-width: 100%;
+  }
+}
+
+/* ── Mobile (≤600px) ── */
+@media (max-width: 600px) {
+  .settings-page {
+    padding-bottom: 40px;
+  }
+
+  .settings-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+  }
+
+  .settings-title {
+    font-size: 22px;
+  }
+
+  .settings-subtitle {
+    font-size: 12px;
+  }
+
+  .settings-grid {
+    gap: 16px;
+  }
+
+  .settings-card {
+    padding: 18px;
+    gap: 16px;
+  }
+
+  .card-title {
+    font-size: 13px;
+  }
+
+  .avatar-circle {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+
+  .avatar-name {
+    font-size: 14px;
+  }
+
+  .settings-input {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .goal-pills {
+    gap: 6px;
+  }
+
+  .goal-pill {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .days-row {
+    gap: 6px;
+  }
+
+  .day-chip {
+    font-size: 12px;
+  }
+
+  .toggle-btn {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .save-btn {
+    padding: 12px;
+    font-size: 12px;
+  }
+
+  .account-action-btn {
+    padding: 12px 14px;
+  }
+
+  .action-title {
+    font-size: 13px;
+  }
+
+  .action-sub {
+    font-size: 10px;
+  }
+
+  .settings-modal {
+    width: calc(100vw - 32px);
+    max-width: 380px;
+    padding: 22px;
+  }
+
+  .modal-title {
+    font-size: 16px;
+  }
 }

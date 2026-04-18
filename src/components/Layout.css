@@ -14,3 +14,21 @@
   padding: 0 40px 40px 40px;
   flex: 1;
 }
+
+/* ───── Tablet ───── */
+@media (max-width: 1024px) {
+  .main-content {
+    margin-left: 0;
+  }
+
+  .page-content {
+    padding: 0 20px 100px 20px; /* extra bottom for mobile tab bar */
+  }
+}
+
+/* ───── Mobile ───── */
+@media (max-width: 600px) {
+  .page-content {
+    padding: 0 14px 100px 14px;
+  }
+}
