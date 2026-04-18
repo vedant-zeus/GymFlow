@@ -85,11 +85,20 @@ const Dashboard = () => {
         
 
         <h1 className="hero-title">
-          {'GYMFLOW'.split('').map((letter, index) => (
-            <span key={index} className="animated-letter" style={{ animationDelay: `${index * 0.1}s` }}>
-              {letter}
-            </span>
-          ))}
+          <span className="hero-word">
+            {'GYM'.split('').map((letter, index) => (
+              <span key={index} className="animated-letter" style={{ animationDelay: `${index * 0.1}s` }}>
+                {letter}
+              </span>
+            ))}
+          </span>
+          <span className="hero-word">
+            {'FLOW'.split('').map((letter, index) => (
+              <span key={index + 3} className="animated-letter" style={{ animationDelay: `${(index + 3) * 0.1}s` }}>
+                {letter}
+              </span>
+            ))}
+          </span>
         </h1>
         <h2 className="hero-subtitle">Track. Lift. Dominate.</h2>
 
